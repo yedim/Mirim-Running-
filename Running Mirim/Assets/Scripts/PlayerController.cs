@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D myRigidbody;
 
-    public bool grounded; //checkbox
+    public bool grounded; //checkbox. ground에 닿았는지 체크하는 변수.
     public LayerMask whatIsGround; // list
 
     private Collider2D myCollider;
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
            
         if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) //스페이스바나 마우스 눌렸을 때
         {
+            //ground에 닿으면 점프가능
             if(grounded)
             {
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
