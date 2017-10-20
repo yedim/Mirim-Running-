@@ -10,8 +10,12 @@ public class PlatformGenerator : MonoBehaviour {
 
     private float platformWidth;
 
-	// Use this for initialization
-	void Start () {
+    public float distanceBetweenMin;
+    public float distanceBetweenMax;
+
+
+    // Use this for initialization
+    void Start () {
         platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
 	}
 	
@@ -20,6 +24,7 @@ public class PlatformGenerator : MonoBehaviour {
 		
         if(transform.position.x < generationPoint.position.x) // generationPoint에 도달하면 새로운 platform생성
         {
+            distanceBetween = Random.Range(distanceBetweenMin, distanceBetweenMax);
             transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween,transform.position.y, transform.position.z);
             Instantiate(thePlatform, transform.position, transform.rotation);
         }
