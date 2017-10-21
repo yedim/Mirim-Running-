@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour {
     public float moveSpeed;
     public float jumpForce;
 
+    public float jumpTime;
+    private float jumpTimeCounter; 
+
     private Rigidbody2D myRigidbody;
 
     public bool grounded; //checkbox. ground에 닿았는지 체크하는 변수.
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
+        jumpTimeCounter = jumpTime;
     }
 	
 	// Update is called once per frame
@@ -34,5 +38,25 @@ public class PlayerController : MonoBehaviour {
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
             }
         }
+        if(Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) 
+        {
+            if(jumpTimeCounter >0) // 이중점프
+            {
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
+                jumpTimeCounter -= Time.deltaTime;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
+        {
+            jumpTimeCounter = 0;
+        }
+
+        if(grounded)
+        {
+            jumpTimeCounter = jumpTime;
+        }
+
+        
 	}
 }
