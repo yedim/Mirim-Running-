@@ -75,7 +75,7 @@ public class PlatformGenerator : MonoBehaviour {
             if(Random.Range(0f, 100f)<randomCoinThreshold)
             {
                 theCoinGenerator.SpawnCoins(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z)); //Platform위에 코인생성
-            }
+            }             
 
             transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2) , transform.position.y, transform.position.z);
 
