@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlatformGenerator : MonoBehaviour {
 
+
     public GameObject thePlatform;
     public Transform generationPoint;
     public float distanceBetween;
@@ -27,6 +28,9 @@ public class PlatformGenerator : MonoBehaviour {
 
     private CoinGenerator theCoinGenerator;
     public float randomCoinThreshold;
+
+    public float randomSpikeThreshold;
+    public ObjectPooler spikePool;
 
     // Use this for initialization
     void Start () {
@@ -74,10 +78,24 @@ public class PlatformGenerator : MonoBehaviour {
 
             if(Random.Range(0f, 100f)<randomCoinThreshold)
             {
+                //여기서 호출
                 theCoinGenerator.SpawnCoins(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z)); //Platform위에 코인생성
-            }             
+            }
 
-            transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2) , transform.position.y, transform.position.z);
+            if (Random.Range(0f, 100f) < randomSpikeThreshold)
+            {
+                GameObject newSpike = spikePool.GetPooledObject();
+
+                float spikeXPoisition = Random.Range(-platformWidths[platformSelector]/2f + 1f, platformWidths[platformSelector] / 2f-1f);
+                Vector3 spikePosition = new Vector3(spikeXPoisition, 2.3f, 0f);//장애물위치
+
+                newSpike.transform.position = transform.position+spikePosition;
+                newSpike.transform.rotation = transform.rotation;
+                newSpike.SetActive(true);
+            }
+
+
+                transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2) , transform.position.y, transform.position.z);
 
         }
     }
