@@ -34,11 +34,13 @@ public class GameManager : MonoBehaviour {
         thePlayer.gameObject.SetActive(false);
 
         theDeathScreen.gameObject.SetActive(true);
+        Time.timeScale = 0;
         //StartCoroutine("RestartGameCo");
     }
 
     public void Reset()
     {
+        Time.timeScale = 1;
         theDeathScreen.gameObject.SetActive(false);
 
         platformList = FindObjectsOfType<PlatformDestroyer>();
