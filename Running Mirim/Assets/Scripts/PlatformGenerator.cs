@@ -32,6 +32,8 @@ public class PlatformGenerator : MonoBehaviour {
     public float randomSpikeThreshold;
     public ObjectPooler spikePool;
 
+    public List<ObjectPooler> spikePoolList; //원하는 오브젝트들을 담는다.
+
     // Use this for initialization
     void Start () {
         // platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
@@ -79,15 +81,23 @@ public class PlatformGenerator : MonoBehaviour {
             if(Random.Range(0f, 100f)<randomCoinThreshold)
             {
                 //여기서 호출
-                theCoinGenerator.SpawnCoins(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z)); //Platform위에 코인생성
+                theCoinGenerator.SpawnCoins(new Vector3(transform.position.x, transform.position.y + 3f, transform.position.z)); //Platform위에 코인생성
             }
 
             if (Random.Range(0f, 100f) < randomSpikeThreshold)
             {
-                GameObject newSpike = spikePool.GetPooledObject();
+                int RandomIndex = 0;
+
+                if(transform.position.x<150)
+                    RandomIndex = Random.Range(0, 5);
+                else
+                    RandomIndex = Random.Range(5, 8);
+
+                //GameObject newSpike = spikePool.GetPooledObject();
+                GameObject newSpike = spikePoolList[RandomIndex].GetPooledObject();
 
                 float spikeXPoisition = Random.Range(-platformWidths[platformSelector]/2f + 1f, platformWidths[platformSelector] / 2f-1f);
-                Vector3 spikePosition = new Vector3(spikeXPoisition, 2.3f, 0f);//장애물위치
+                Vector3 spikePosition = new Vector3(spikeXPoisition, newSpike.transform.position.y+2.5f, 0f);//장애물위치
 
                 newSpike.transform.position = transform.position+spikePosition;
                 newSpike.transform.rotation = transform.rotation;
