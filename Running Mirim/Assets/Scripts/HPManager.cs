@@ -23,12 +23,13 @@ public class HPManager : MonoBehaviour {
         {
             time -= Time.deltaTime;
             fillImage.fillAmount = time / timeAmt;
-        }      
+        }
 	}
     public void ResetHP()
     {
         time = timeAmt;
         fillImage.fillAmount = 1;
     }
+  
 
 }

@@ -7,20 +7,25 @@ public class ScoreManager : MonoBehaviour {
 
     public Text scoreText;
     public Text highScoreText;
+    public Text resultScoreText;
 
     public float scoreCount;
     public float highScoreCount;
+    public float resultScoreCount;
 
     public float pointsPerSecond;
 
     public bool scoreIncreasing;
 
+    public bool shouldDouble;
+
+
 	// Use this for initialization
 	void Start () {
-		if(PlayerPrefs.HasKey("HighScore"))
-        {
-            highScoreCount = PlayerPrefs.GetFloat("HighScore");
-        }
+		//if(PlayerPrefs.HasKey("HighScore"))
+  //      {
+  //          highScoreCount = PlayerPrefs.GetFloat("HighScore");
+  //      }
 	}
 	
 	// Update is called once per frame
@@ -31,16 +36,22 @@ public class ScoreManager : MonoBehaviour {
             scoreCount += pointsPerSecond * Time.deltaTime;
         }
 
-        if(scoreCount > highScoreCount)
+        if (scoreCount > highScoreCount)
         {
             highScoreCount = scoreCount;
-            PlayerPrefs.SetFloat("HighScore", highScoreCount);
+            PlayerPrefs.SetFloat("High Score ", highScoreCount);
         }
-        scoreText.text = "Score : " + Mathf.Round(scoreCount);
-        highScoreText.text = "High Score : " + Mathf.Round(highScoreCount);
+        scoreText.text = ""+ Mathf.Round(scoreCount);
+        resultScoreText.text = scoreText.text;
+        highScoreText.text = "High Score " + Mathf.Round(highScoreCount);
+
 	}
     public void AddScore(int pointsToAdd)
     {
+        if(shouldDouble)
+        {
+            pointsToAdd = pointsToAdd * 2;
+        }
         scoreCount += pointsToAdd;
     }
 }
